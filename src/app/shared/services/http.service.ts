@@ -11,27 +11,20 @@ import { DateTime } from 'luxon';
 })
 export class HttpService {
   private token?: string;
-
   private spotifyToken?: {
     token?: string;
     refresh_token: string;
     expires_at: DateTime;
   };
-
   urlParams: any;
-
   user?: User;
-
   isInit: boolean = false;
   initPromise: Subject<boolean> = new Subject<boolean>();
-
   constructor(private http: HttpClient, private router: Router) {
     this.init();
   }
-
   public async init() {
     this.urlParams = new URLSearchParams(window.location.search);
-
     if (this.urlParams.has('code')) {
       let code = this.urlParams.get('code') as string;
       let response = await this.requestApi('/auth/callback', 'GET', {
@@ -39,22 +32,21 @@ export class HttpService {
       });
       if (response && response.token) {
         this.user = response.user;
-        this.saveTokens(response.token);
+        this.saveTokens(response);
+        console.log(response);
+        console.log(this.user);
       }
     } else {
       this.token = localStorage.getItem('apiToken')
         ? JSON.parse(localStorage.getItem('apiToken') as string).token
         : undefined;
-
       if (this.token) {
         await this.getUser();
       }
     }
-
     this.isInit = true;
     this.initPromise.next(true);
   }
-
   public async requestApi(
     action: string,
     method: string = 'GET',
@@ -63,9 +55,7 @@ export class HttpService {
   ): Promise<any> {
     const methodWanted = method.toLowerCase();
     let route = environment.API_URL + action;
-
     let req = null;
-
     if (httpOptions.headers === undefined) {
       httpOptions.headers = new HttpHeaders({
         Accept: 'application/json',
@@ -73,14 +63,12 @@ export class HttpService {
         'Access-Control-Allow-Origin': '*',
       });
     }
-
     if (this.token) {
       httpOptions.headers = httpOptions.headers.set(
         'Authorization',
         'Bearer ' + this.token
       );
     }
-
     switch (methodWanted) {
       case 'post':
         req = this.http.post(route, datas, httpOptions);
@@ -106,30 +94,25 @@ export class HttpService {
               return key + '=' + datas[key];
             })
             .join('&');
-
         req = this.http.get(route, httpOptions);
         break;
     }
-
     return req.toPromise();
   }
-
-  saveTokens(apiToken: { access_token: string; expires_in: number }) {
+  saveTokens(response: { token: string; user: User }) {
     localStorage.setItem(
       'apiToken',
       JSON.stringify({
-        token: apiToken.access_token,
+        token: response.token,
         expires_at: DateTime.now()
-          .plus({ seconds: apiToken.expires_in })
+          .plus({ seconds: response.user.spotifyExpiresIn })
           .toISO(),
       })
     );
-
-    this.token = apiToken.access_token;
+    this.token = response.token;
   }
-
   async getUser() {
-    await this.requestApi('/user', 'GET').then(
+    await this.requestApi('/api/user', 'GET').then(
       (res) => {
         this.user = res;
       },
@@ -139,11 +122,9 @@ export class HttpService {
       }
     );
   }
-
   isLogged(): boolean {
     return this.token !== undefined;
   }
-
   logout() {
     localStorage.removeItem('apiToken');
     localStorage.removeItem('spotifyToken');
