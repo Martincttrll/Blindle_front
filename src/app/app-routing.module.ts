@@ -6,15 +6,15 @@ import { AuthGuard } from './shared/guards/auth.guard';
 import { ProfileComponent } from './pages/logged/profile/profile.component';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: '', component: LoginComponent },
   {
     path: '',
     component: LoggedComponent,
     canActivate: [AuthGuard],
     children: [
       { path: 'logged', component: LoggedComponent },
-      { path: 'profile', component: ProfileComponent },
-      { path: '', redirectTo: 'profile', pathMatch: 'full' },
+      { path: '', component: ProfileComponent },
+      // { path: '', redirectTo: 'profile', pathMatch: 'full' },
     ],
   },
 ];
