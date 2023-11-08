@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { LoggedComponent } from './pages/logged/logged.component';
 import { ProfileComponent } from './pages/logged/profile/profile.component';
+import { ModalComponent } from './pages/logged/modal/modal.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { ProfileComponent } from './pages/logged/profile/profile.component';
     LoginComponent,
     LoggedComponent,
     ProfileComponent,
+    ModalComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],
