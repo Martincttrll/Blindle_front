@@ -13,7 +13,7 @@
   </p>
 </div>
 
-<div class="achievements flex justify-center">
+<div class="achievements flex justify-center my-7">
   <p *ngIf="!achievements" class="text-zinc-600 italic">
     Aucun succès pour le moment
   </p>
@@ -22,5 +22,12 @@
       *ngFor="let achievement of achievements"
       [achievement]="achievement"
     ></app-achievement-card>
+  </div>
+</div>
+
+<div class="my-7">
+  <p class="mb-3">Historique de partie</p>
+  <div class="flex justify-center">
+    <app-list [datas]="history" class="w-full"></app-list>
   </div>
 </div>
