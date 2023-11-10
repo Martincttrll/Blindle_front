@@ -8,6 +8,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { LoggedComponent } from './pages/logged/logged.component';
 import { ProfileComponent } from './pages/logged/profile/profile.component';
 import { ModalComponent } from './pages/logged/modal/modal.component';
+import { AchievementCardComponent } from './shared/layout/achievement-card/achievement-card.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { ModalComponent } from './pages/logged/modal/modal.component';
     LoggedComponent,
     ProfileComponent,
     ModalComponent,
+    AchievementCardComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],

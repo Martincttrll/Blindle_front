@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { environment } from 'src/environments/environment.development';
+import { API_URL } from 'src/environments/environment.development';
 
 @Component({
   selector: 'app-login',
@@ -9,6 +9,6 @@ import { environment } from 'src/environments/environment.development';
 export class LoginComponent {
   constructor() {}
   loginBtn() {
-    window.location.href = environment.API_URL + '/auth/redirect';
+    window.location.href = API_URL + '/auth/redirect';
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment.development';
+import { API_URL } from '../../../environments/environment.development';
 import { User } from '../models/user.model';
 import { Subject } from 'rxjs';
 import { DateTime } from 'luxon';
@@ -33,8 +33,6 @@ export class HttpService {
       if (response && response.token) {
         this.user = response.user;
         this.saveTokens(response);
-        console.log(response);
-        console.log(this.user);
       }
     } else {
       this.token = localStorage.getItem('apiToken')
@@ -54,7 +52,7 @@ export class HttpService {
     httpOptions: any = {}
   ): Promise<any> {
     const methodWanted = method.toLowerCase();
-    let route = environment.API_URL + action;
+    let route = API_URL + action;
     let req = null;
     if (httpOptions.headers === undefined) {
       httpOptions.headers = new HttpHeaders({

@@ -1,32 +1,26 @@
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
-<p>profile works!</p>
+<div class="infos-container flex flex-col items-center p-2 my-7">
+  <img *ngIf="hasProfilePic()" [src]="user?.avatar" alt="Avatar du profil" />
+  <img
+    *ngIf="!hasProfilePic()"
+    src="assets/img/user.png"
+    alt="Avatar par défaut"
+    width="100px"
+  />
+  <p class="font-bold mt-3">{{ user?.name }}</p>
+  <p>
+    <span class="text-secondary">{{ user?.nbWin }}</span> gagnées -
+    <span class="text-primary">{{ nbLose }}</span> perdues
+  </p>
+</div>
+
+<div class="achievements flex justify-center">
+  <p *ngIf="!achievements" class="text-zinc-600 italic">
+    Aucun succès pour le moment
+  </p>
+  <div class="card-container overflow-x-auto flex flex-nowrap">
+    <app-achievement-card
+      *ngFor="let achievement of achievements"
+      [achievement]="achievement"
+    ></app-achievement-card>
+  </div>
+</div>
