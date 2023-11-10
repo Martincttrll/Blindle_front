@@ -1,1 +1,17 @@
-<p>logged works!</p>
+<header
+  class="flex fixed items-center p-3 gap-2 bg-secondary-content text-white w-full"
+>
+  <a routerLink="/"
+    ><img src="/assets/img/logo.png" alt="" srcset="" width="50px" />
+  </a>
+  <div class="font-extrabold">Blindle</div>
+</header>
+<div class="pt-16 p-5">
+  <router-outlet></router-outlet>
+</div>
+<div class="fixed flex justify-center bottom-5 w-full">
+  <button class="btn bg-primary text-white" (click)="openModal()">
+    Jouer !
+  </button>
+  <app-modal *ngIf="showModal" (closeModalEvent)="closeModal()"></app-modal>
+</div>
