@@ -4,7 +4,7 @@ import { AchievementService } from 'src/app/shared/services/achievement.service'
 import { Achievement } from 'src/app/shared/models/achievement.model';
 import { UserService } from 'src/app/shared/services/user.service';
 import { Group } from 'src/app/shared/models/group.model';
-import { User } from 'src/app/shared/models/user.model';
+import { Song } from 'src/app/shared/models/song.model';
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +14,7 @@ import { User } from 'src/app/shared/models/user.model';
 export class ProfileComponent {
   achievements: Achievement[] = [];
   history: Group[] = [];
+  songs: Song[] = [];
 
   user = this.http.user;
   nbLose: number = (this.user?.nbGame || 0) - (this.user?.nbWin || 0);
@@ -30,25 +31,37 @@ export class ProfileComponent {
       this.history = this.formatDataFromHistory(data);
     });
 
-    this;
+    this.userService.getSongs().then((data) => {
+      this.songs = this.formatDataFromSongs(data);
+    });
+  }
+
+  refresh() {
+    this.userService.refresh().then((data) => {
+      console.log(data);
+      if (data == "Les likes de l'utilisateurs ont bien été syncronisé.") {
+        this.userService.getSongs().then((data) => {
+          this.songs = this.formatDataFromSongs(data);
+        });
+      }
+    });
   }
 
   hasProfilePic(): boolean {
     return !!this.user?.avatar;
   }
-  hasAchievements(): boolean {
-    return !!this.achievements;
-  }
+
   //Formatage pour la liste d'historique
   formatDataFromHistory(history: Group[]): any[] {
     let datas: any[] = [];
     history.forEach((group) => {
       let formattedData = {
         leftData: group.name,
-        centerData: group.winner,
+        centerData: 'Gagnant !',
         rightData: group.updated_at,
         isLeftDataPic: false,
         isRightDataDate: true,
+        isRightDataLink: false,
       };
 
       datas.push(formattedData);
@@ -56,5 +69,21 @@ export class ProfileComponent {
     return datas;
   }
 
-  ngOnInit() {}
+  //Formatage pour la liste de musiques
+  formatDataFromSongs(songs: Song[]): any[] {
+    let datas: any[] = [];
+    songs.forEach((song) => {
+      let formattedData = {
+        leftData: song.title,
+        centerData: song.artist,
+        rightData: song.previewUrl,
+        isLeftDataPic: false,
+        isRightDataDate: false,
+        isRightDataLink: true,
+      };
+
+      datas.push(formattedData);
+    });
+    return datas;
+  }
 }

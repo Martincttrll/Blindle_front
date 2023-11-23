@@ -9,6 +9,7 @@ export class ListItemComponent {
   @Input() index!: number;
   @Input() isLeftDataPic!: boolean;
   @Input() isRightDataDate!: boolean;
+  @Input() isRightDataLink!: boolean;
   @Input() leftData!: string;
   @Input() centerData!: string;
   @Input() rightData!: string;
