@@ -1,0 +1,60 @@
+<div class="fixed inset-0 z-10 flex items-center justify-center">
+  <div
+    class="modal-overlay absolute inset-0 bg-black opacity-50"
+    (click)="sendCloseModal()"
+  ></div>
+  <div
+    class="modal-container flex-col items-center p-6 gap-6 bg-secondary-content text-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+    [ngStyle]="{ display: !showCreateGroup ? 'flex' : 'none' }"
+  >
+    <input
+      class="input input-bordered w-60"
+      type="text"
+      name="join-token"
+      id="join-token"
+      placeholder="Code du groupe"
+    />
+    <div>
+      <button class="btn bg-secondary text-white w-60">Rejoindre</button>
+    </div>
+    <div class="border-t w-[90%] border-gray-600"></div>
+    <div>
+      <button class="btn bg-primary text-white w-60" (click)="changeModal()">
+        Créer un groupe
+      </button>
+    </div>
+  </div>
+  <div
+    class="create-group modal-container flex-col items-center p-6 gap-6 bg-secondary-content text-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
+    [ngStyle]="{ display: showCreateGroup ? 'flex' : 'none' }"
+  >
+    <div class="flex align-center gap-3">
+      <input
+        class="input input-bordered w-60"
+        type="text"
+        name="group-name"
+        id="group-name"
+        placeholder="Nom du groupe"
+        #groupname
+      />
+      <div class="tooltip tooltip-open" data-tip="Clique pour copier !">
+        <img
+          src="/assets/img/copy.svg"
+          alt="copy to clipboard"
+          srcset=""
+          width="30px"
+          class="cursor-pointer"
+        />
+      </div>
+    </div>
+
+    <div>
+      <button
+        class="btn bg-primary text-white w-60"
+        (click)="createGroup(groupname)"
+      >
+        Créer
+      </button>
+    </div>
+  </div>
+</div>
