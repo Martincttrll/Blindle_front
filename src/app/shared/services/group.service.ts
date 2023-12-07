@@ -10,7 +10,7 @@ export class GroupService {
 
   async createGroup(groupname: string): Promise<Group[]> {
     return this.http
-      .requestApi('/api/group/store', 'POST', { name: groupname })
+      .requestApi('/api/group', 'POST', { name: groupname })
       .then((res) => {
         return res;
       });
