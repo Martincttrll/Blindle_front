@@ -10,7 +10,7 @@ import { DateTime } from 'luxon';
   providedIn: 'root',
 })
 export class HttpService {
-  private token?: string;
+  public token?: string;
   private spotifyToken?: {
     token?: string;
     refresh_token: string;
@@ -120,6 +120,7 @@ export class HttpService {
       }
     );
   }
+
   isLogged(): boolean {
     return this.token !== undefined;
   }

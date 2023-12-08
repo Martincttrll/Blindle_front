@@ -23,6 +23,7 @@ export class ModalComponent {
     const groupname = inputElement.value;
     this.group.createGroup(groupname).then((data) => {
       console.log(data);
+      /////Redirect to room
     });
   }
   copyInputMessage(inputElement: any) {
