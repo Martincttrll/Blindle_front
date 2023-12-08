@@ -6,5 +6,6 @@
   <span *ngIf="!isLeftDataPic">{{ leftData }}</span>
   <span>{{ centerData }}</span>
   <span *ngIf="isRightDataDate">{{ rightData | date : "dd-MM-yyyy" }}</span>
-  <span *ngIf="!isRightDataDate">{{ rightData }}</span>
+  <span *ngIf="!isRightDataDate && !isRightDataLink">{{ rightData }}</span>
+  <a *ngIf="isRightDataLink" [href]="rightData">Lire</a>
 </div>
