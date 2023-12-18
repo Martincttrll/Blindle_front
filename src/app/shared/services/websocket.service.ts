@@ -60,5 +60,8 @@ export class WebsocketService {
       console.log(data.user.name + ' a rejoint le groupe.');
       group.users.push(data.user);
     });
+    channel.bind('guessAnswer', (data: any) => {
+      console.log('Une réponse a été enregistrée : ' + data);
+    });
   }
 }
