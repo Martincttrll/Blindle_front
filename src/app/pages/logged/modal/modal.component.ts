@@ -29,6 +29,7 @@ export class ModalComponent {
         console.log(data);
         console.log('Vous avez rejoin le groupe : ' + data.name);
         this.router.navigate(['/group', data.token]);
+        this.sendCloseModal();
       })
       .catch((error) => {
         console.error(error);
@@ -41,6 +42,7 @@ export class ModalComponent {
     this.groupService.createGroup(groupname).then((data) => {
       console.log(data);
       this.router.navigate(['/group', data.token]);
+      this.sendCloseModal();
     });
   }
 }

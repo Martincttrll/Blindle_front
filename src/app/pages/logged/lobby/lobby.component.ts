@@ -3,6 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Group } from 'src/app/shared/models/group.model';
 import { GroupService } from 'src/app/shared/services/group.service';
 
+import { WebsocketService } from 'src/app/shared/services/websocket.service';
+
 @Component({
   selector: 'app-lobby',
   templateUrl: './lobby.component.html',
@@ -14,7 +16,8 @@ export class LobbyComponent {
 
   constructor(
     private route: ActivatedRoute,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private ws: WebsocketService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +30,7 @@ export class LobbyComponent {
   loadGroupData(): void {
     this.groupService.getGroupByToken(this.groupToken).then((data) => {
       this.group = data;
+      this.ws.linkChannelWithToken(this.group.token, this.group);
     });
   }
 

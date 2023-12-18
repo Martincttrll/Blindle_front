@@ -11,6 +11,7 @@ import {
   MIX_PUSHER_TRANSPORT,
 } from '../../../environments/environment';
 import { HttpService } from './http.service';
+import { Group } from '../models/group.model';
 
 // @ts-ignore
 window.Pusher = require('pusher-js');
@@ -46,17 +47,18 @@ export class WebsocketService {
     });
   }
 
-  linkChannelWithToken(groupToken: string) {
+  linkChannelWithToken(groupToken: string, group: Group) {
     this.channel = this.linkChannel(this.ws, groupToken);
-    this.bindEvents(this.channel);
+    this.bindEvents(this.channel, group);
   }
 
   linkChannel(ws: any, groupToken: string) {
     return ws.private('Group.' + groupToken).pusher;
   }
-  bindEvents(channel: any) {
+  bindEvents(channel: any, group: Group) {
     channel.bind('joinGroup', (data: any) => {
-      console.log('joingGroup', data);
+      console.log(data.user.name + ' a rejoint le groupe.');
+      group.users.push(data.user);
     });
   }
 }
