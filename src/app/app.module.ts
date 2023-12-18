@@ -11,6 +11,8 @@ import { ModalComponent } from './pages/logged/modal/modal.component';
 import { AchievementCardComponent } from './shared/layout/achievement-card/achievement-card.component';
 import { ListComponent } from './shared/layout/list/list.component';
 import { ListItemComponent } from './shared/layout/list/list-item/list-item.component';
+import { LobbyComponent } from './pages/logged/lobby/lobby.component';
+import { AlertErrorComponent } from './shared/layout/alert-error/alert-error.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { ListItemComponent } from './shared/layout/list/list-item/list-item.comp
     AchievementCardComponent,
     ListComponent,
     ListItemComponent,
+    LobbyComponent,
+    AlertErrorComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],

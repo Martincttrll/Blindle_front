@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { LoggedComponent } from './pages/logged/logged.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ProfileComponent } from './pages/logged/profile/profile.component';
+import { LobbyComponent } from './pages/logged/lobby/lobby.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
@@ -14,6 +15,7 @@ const routes: Routes = [
     children: [
       { path: 'logged', component: LoggedComponent },
       { path: '', component: ProfileComponent },
+      { path: 'group/:token', component: LobbyComponent },
     ],
   },
 ];
