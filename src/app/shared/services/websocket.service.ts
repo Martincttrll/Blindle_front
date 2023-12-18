@@ -19,10 +19,11 @@ window.Pusher = require('pusher-js');
   providedIn: 'root',
 })
 export class WebsocketService {
+  private ws: any;
+  private channel: any;
+
   constructor(public http: HttpService) {
-    let ws = this.initWs();
-    let channel = this.linkChannel(ws);
-    this.bindEvents(channel);
+    this.ws = this.initWs();
   }
 
   initWs(): any {
@@ -44,6 +45,12 @@ export class WebsocketService {
       },
     });
   }
+
+  linkChannelWithToken(groupToken: string) {
+    this.channel = this.linkChannel(this.ws, groupToken);
+    this.bindEvents(this.channel);
+  }
+
   linkChannel(ws: any, groupToken: string) {
     return ws.private('Group.' + groupToken).pusher;
   }
