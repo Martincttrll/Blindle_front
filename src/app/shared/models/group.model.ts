@@ -7,5 +7,5 @@ export interface Group {
   token: string;
   winner: number;
   updated_at: DateTime;
-  users?: User[];
+  users: User[];
 }
