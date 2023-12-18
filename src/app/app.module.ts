@@ -13,6 +13,7 @@ import { ListComponent } from './shared/layout/list/list.component';
 import { ListItemComponent } from './shared/layout/list/list-item/list-item.component';
 import { LobbyComponent } from './pages/logged/lobby/lobby.component';
 import { AlertErrorComponent } from './shared/layout/alert-error/alert-error.component';
+import { GameComponent } from './pages/logged/game/game.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { AlertErrorComponent } from './shared/layout/alert-error/alert-error.com
     ListItemComponent,
     LobbyComponent,
     AlertErrorComponent,
+    GameComponent,
   ],
   imports: [BrowserModule, HttpClientModule, AppRoutingModule],
   providers: [],

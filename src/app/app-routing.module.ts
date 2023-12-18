@@ -5,6 +5,7 @@ import { LoggedComponent } from './pages/logged/logged.component';
 import { AuthGuard } from './shared/guards/auth.guard';
 import { ProfileComponent } from './pages/logged/profile/profile.component';
 import { LobbyComponent } from './pages/logged/lobby/lobby.component';
+import { GameComponent } from './pages/logged/game/game.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
@@ -16,6 +17,7 @@ const routes: Routes = [
       { path: 'logged', component: LoggedComponent },
       { path: '', component: ProfileComponent },
       { path: 'group/:token', component: LobbyComponent },
+      { path: 'game/:token', component: GameComponent },
     ],
   },
 ];
