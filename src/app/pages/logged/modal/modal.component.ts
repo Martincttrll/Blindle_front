@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { GroupService } from 'src/app/shared/services/group.service';
 
 @Component({
@@ -10,7 +11,8 @@ export class ModalComponent {
   @Output() closeModalEvent = new EventEmitter<void>();
 
   showCreateGroup: boolean = false;
-  constructor(public group: GroupService) {}
+  errorJoinGroup?: string;
+  constructor(public groupService: GroupService, private router: Router) {}
 
   sendCloseModal() {
     this.closeModalEvent.emit();
@@ -18,17 +20,27 @@ export class ModalComponent {
   changeModal() {
     this.showCreateGroup = true;
   }
-  createGroup(inputElement: any) {
-    // document.getElementById('group-name').value;
-    const groupname = inputElement.value;
-    this.group.createGroup(groupname).then((data) => {
-      console.log(data);
-      /////Redirect to room
-    });
+
+  joinGroup(inputElement: any) {
+    const grouptoken = inputElement.value;
+    this.groupService
+      .joinGroup(grouptoken)
+      .then((data) => {
+        console.log(data);
+        console.log('Vous avez rejoin le groupe : ' + data.name);
+        this.router.navigate(['/group', data.token]);
+      })
+      .catch((error) => {
+        console.error(error);
+        this.errorJoinGroup = 'Code invalide.';
+      });
   }
-  copyInputMessage(inputElement: any) {
-    inputElement.select();
-    document.execCommand('copy');
-    inputElement.setSelectionRange(0, 0);
+
+  createGroup(inputElement: any) {
+    const groupname = inputElement.value;
+    this.groupService.createGroup(groupname).then((data) => {
+      console.log(data);
+      this.router.navigate(['/group', data.token]);
+    });
   }
 }

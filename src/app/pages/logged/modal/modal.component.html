@@ -7,15 +7,26 @@
     class="modal-container flex-col items-center p-6 gap-6 bg-secondary-content text-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto"
     [ngStyle]="{ display: !showCreateGroup ? 'flex' : 'none' }"
   >
+    <!-- ERROR MESSAGE  -->
+    <div *ngIf="errorJoinGroup">
+      <app-alert-error [errorMessage]="errorJoinGroup"></app-alert-error>
+    </div>
+
     <input
       class="input input-bordered w-60"
       type="text"
       name="join-token"
       id="join-token"
       placeholder="Code du groupe"
+      #grouptoken
     />
     <div>
-      <button class="btn bg-secondary text-white w-60">Rejoindre</button>
+      <button
+        class="btn bg-secondary text-white w-60"
+        (click)="joinGroup(grouptoken)"
+      >
+        Rejoindre
+      </button>
     </div>
     <div class="border-t w-[90%] border-gray-600"></div>
     <div>
@@ -37,15 +48,6 @@
         placeholder="Nom du groupe"
         #groupname
       />
-      <div class="tooltip tooltip-open" data-tip="Clique pour copier !">
-        <img
-          src="/assets/img/copy.svg"
-          alt="copy to clipboard"
-          srcset=""
-          width="30px"
-          class="cursor-pointer"
-        />
-      </div>
     </div>
 
     <div>
