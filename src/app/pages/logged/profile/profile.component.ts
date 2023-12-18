@@ -15,6 +15,7 @@ export class ProfileComponent {
   achievements: Achievement[] = [];
   history: Group[] = [];
   songs: Song[] = [];
+  showModal = false;
 
   user = this.http.user;
   nbLose: number = (this.user?.nbGame || 0) - (this.user?.nbWin || 0);
@@ -85,5 +86,12 @@ export class ProfileComponent {
       datas.push(formattedData);
     });
     return datas;
+  }
+
+  openModal() {
+    this.showModal = true;
+  }
+  closeModal() {
+    this.showModal = false;
   }
 }

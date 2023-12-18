@@ -9,9 +9,3 @@
 <div class="pt-16 p-5">
   <router-outlet></router-outlet>
 </div>
-<div class="fixed flex justify-center bottom-5 w-full">
-  <button class="btn bg-primary text-white" (click)="openModal()">
-    Jouer !
-  </button>
-  <app-modal *ngIf="showModal" (closeModalEvent)="closeModal()"></app-modal>
-</div>
