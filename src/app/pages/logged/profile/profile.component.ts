@@ -1,15 +1,15 @@
-import { Component } from '@angular/core';
-import { HttpService } from 'src/app/shared/services/http.service';
-import { AchievementService } from 'src/app/shared/services/achievement.service';
-import { Achievement } from 'src/app/shared/models/achievement.model';
-import { UserService } from 'src/app/shared/services/user.service';
-import { Group } from 'src/app/shared/models/group.model';
-import { Song } from 'src/app/shared/models/song.model';
+import { Component } from "@angular/core";
+import { HttpService } from "src/app/shared/services/http.service";
+import { AchievementService } from "src/app/shared/services/achievement.service";
+import { Achievement } from "src/app/shared/models/achievement.model";
+import { UserService } from "src/app/shared/services/user.service";
+import { Group } from "src/app/shared/models/group.model";
+import { Song } from "src/app/shared/models/song.model";
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss'],
+  selector: "app-profile",
+  templateUrl: "./profile.component.html",
+  styleUrls: ["./profile.component.scss"],
 })
 export class ProfileComponent {
   achievements: Achievement[] = [];
@@ -58,7 +58,7 @@ export class ProfileComponent {
     history.forEach((group) => {
       let formattedData = {
         leftData: group.name,
-        centerData: 'Gagnant !',
+        centerData: "",
         rightData: group.updated_at,
         isLeftDataPic: false,
         isRightDataDate: true,

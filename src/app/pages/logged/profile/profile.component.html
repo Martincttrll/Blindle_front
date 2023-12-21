@@ -4,8 +4,7 @@
     *ngIf="!hasProfilePic()"
     src="assets/img/user.png"
     alt="Avatar par défaut"
-    width="100px"
-  />
+    width="100px" />
   <p class="font-bold mt-3">{{ user?.name }}</p>
   <p>
     <span class="text-secondary">{{ user?.nbWin }}</span> gagnées -
@@ -20,13 +19,12 @@
   <div class="card-container overflow-x-auto flex flex-nowrap">
     <app-achievement-card
       *ngFor="let achievement of achievements"
-      [achievement]="achievement"
-    ></app-achievement-card>
+      [achievement]="achievement"></app-achievement-card>
   </div>
 </div>
 
 <div class="my-10">
-  <p class="mb-3">Historique de victoires</p>
+  <p class="mb-3">Historique</p>
   <div class="flex justify-center">
     <app-list [datas]="history" class="w-full"></app-list>
   </div>
