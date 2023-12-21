@@ -14,12 +14,13 @@
     </div>
   </div>
 
-  <div *ngIf="isUrlReady && currentSong">
-    <audio controls #audioPlayer>
-      <source [src]="currentSong.previewUrl" type="audio/mp3" />
-      Votre navigateur ne supporte pas l'élément audio.
-    </audio>
-  </div>
+  <audio controls #audioPlayer>
+    <source
+      *ngIf="currentSong"
+      [src]="currentSong.previewUrl"
+      type="audio/mp3" />
+    Votre navigateur ne supporte pas l'élément audio.
+  </audio>
 
   <div class="flex">
     <input
@@ -27,8 +28,7 @@
       placeholder="Écrire..."
       class="input input-bordered w-full max-w-xs"
       #guess
-      (keyup.enter)="submitGuess(guess)"
-    />
+      (keyup.enter)="submitGuess(guess)" />
     <button class="btn bg-primary" (click)="submitGuess(guess)">Envoyer</button>
   </div>
 </div>
