@@ -1,20 +1,19 @@
 <div class="container flex flex-col justify-between h-[88vh]">
-  <div class="flex flex-row justify-between my-7">
-    <div class="text-yellow-500">
-      <div>Joueur</div>
-      <div>355pts</div>
-    </div>
-    <div class="text-zinc-400">
-      <div>Joueur</div>
-      <div>355pts</div>
-    </div>
-    <div class="text-amber-800">
-      <div>Joueur</div>
-      <div>355pts</div>
+  <div *ngIf="group">
+    <div
+      *ngFor="let user of sortedUsers(); let i = index"
+      [ngClass]="getPodiumClass(i)"
+      class="flex flex-row justify-between my-7">
+      <div>{{ user.name }}</div>
+      <div>{{ user.points }}pts</div>
     </div>
   </div>
 
-  <audio controls #audioPlayer>
+  <div role="alert" class="alert alert-info" *ngIf="showCurrentSong">
+    C'était {{ currentSong.title }} de {{ currentSong.artist }} !!
+  </div>
+
+  <audio #audioPlayer>
     <source
       *ngIf="currentSong"
       [src]="currentSong.previewUrl"
@@ -22,13 +21,26 @@
     Votre navigateur ne supporte pas l'élément audio.
   </audio>
 
-  <div class="flex">
-    <input
-      type="text"
-      placeholder="Écrire..."
-      class="input input-bordered w-full max-w-xs"
-      #guess
-      (keyup.enter)="submitGuess(guess)" />
-    <button class="btn bg-primary" (click)="submitGuess(guess)">Envoyer</button>
+  <div>
+    <div *ngFor="let message of chatMessages">
+      <div *ngIf="message.status; else elseBlock" class="text-secondary">
+        {{ message.message }}
+      </div>
+      <ng-template #elseBlock>
+        <div>{{ message.user }}: {{ message.message }}</div>
+      </ng-template>
+    </div>
+
+    <div class="flex mt-2">
+      <input
+        type="text"
+        placeholder="Écrire..."
+        class="input input-bordered w-full max-w-xs"
+        #guess
+        (keyup.enter)="submitGuess(guess)" />
+      <button class="btn bg-primary" (click)="submitGuess(guess)">
+        Envoyer
+      </button>
+    </div>
   </div>
 </div>
