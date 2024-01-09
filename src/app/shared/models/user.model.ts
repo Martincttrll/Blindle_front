@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+import { DateTime } from "luxon";
 
 export interface User {
   id: number;
@@ -9,6 +9,8 @@ export interface User {
   nbGame: number;
   idSpotify: string;
   avatar?: string;
+  points?: number;
+  alreadyGuess?: Array<string>;
   spotifyAccessToken: string;
   spotifyRefreshToken: string;
   spotifyExpiresIn: number;
