@@ -68,6 +68,15 @@ export class WebsocketService {
       console.log(data.user.name + " a rejoint le groupe.");
       group.users.push(data.user);
     });
+    channel.bind("leftGroup", (data: any) => {
+      console.log(data.user.name + " a quitté le groupe.");
+      const userIndex = group.users.findIndex(
+        (user: any) => user.id === data.user.id
+      );
+      if (userIndex !== -1) {
+        group.users.splice(userIndex, 1);
+      }
+    });
     channel.bind("guessAnswer", (data: any) => {
       this.guessAnswerSubject.next(data);
     });

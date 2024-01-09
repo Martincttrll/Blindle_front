@@ -29,6 +29,11 @@ export class LobbyComponent {
       this.loadGroupData();
     });
   }
+  ngOnDestroy(): void {}
+
+  // leaveLobby(): void {
+  //   this.groupService.leaveGroup(this.groupToken);
+  // }
 
   loadGroupData(): void {
     this.groupService.getGroupByToken(this.groupToken).then((data) => {
@@ -49,9 +54,7 @@ export class LobbyComponent {
   setReady(): void {
     this.http
       .requestApi("/api/game/start/" + this.groupToken, "GET")
-      .then((data) => {
-        console.log(data);
-      });
+      .then((data) => {});
     /////Tous les joueurs soient prêt pour que la partie se lance.
     //   const id = this.http.user!.id;
     //   if (!this.readyPlayers.includes(id)) {

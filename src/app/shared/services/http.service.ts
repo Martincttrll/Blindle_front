@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { API_URL } from '../../../environments/environment.development';
-import { User } from '../models/user.model';
-import { Subject } from 'rxjs';
-import { DateTime } from 'luxon';
+import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Router } from "@angular/router";
+import { API_URL } from "../../../environments/environment.development";
+import { User } from "../models/user.model";
+import { Subject } from "rxjs";
+import { DateTime } from "luxon";
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: "root",
 })
 export class HttpService {
   public token?: string;
@@ -25,9 +25,9 @@ export class HttpService {
   }
   public async init() {
     this.urlParams = new URLSearchParams(window.location.search);
-    if (this.urlParams.has('code')) {
-      let code = this.urlParams.get('code') as string;
-      let response = await this.requestApi('/auth/callback', 'GET', {
+    if (this.urlParams.has("code")) {
+      let code = this.urlParams.get("code") as string;
+      let response = await this.requestApi("/auth/callback", "GET", {
         code,
       });
       if (response && response.token) {
@@ -35,8 +35,8 @@ export class HttpService {
         this.saveTokens(response);
       }
     } else {
-      this.token = localStorage.getItem('apiToken')
-        ? JSON.parse(localStorage.getItem('apiToken') as string).token
+      this.token = localStorage.getItem("apiToken")
+        ? JSON.parse(localStorage.getItem("apiToken") as string).token
         : undefined;
       if (this.token) {
         await this.getUser();
@@ -47,7 +47,7 @@ export class HttpService {
   }
   public async requestApi(
     action: string,
-    method: string = 'GET',
+    method: string = "GET",
     datas: any = {},
     httpOptions: any = {}
   ): Promise<any> {
@@ -56,42 +56,42 @@ export class HttpService {
     let req = null;
     if (httpOptions.headers === undefined) {
       httpOptions.headers = new HttpHeaders({
-        Accept: 'application/json',
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
       });
     }
     if (this.token) {
       httpOptions.headers = httpOptions.headers.set(
-        'Authorization',
-        'Bearer ' + this.token
+        "Authorization",
+        "Bearer " + this.token
       );
     }
     switch (methodWanted) {
-      case 'post':
+      case "post":
         req = this.http.post(route, datas, httpOptions);
         break;
-      case 'put':
+      case "put":
         req = this.http.put(route, datas, httpOptions);
         break;
-      case 'delete':
+      case "delete":
         route +=
-          '?' +
+          "?" +
           Object.keys(datas)
             .map((key) => {
-              return key + '=' + datas[key];
+              return key + "=" + datas[key];
             })
-            .join('&');
+            .join("&");
         req = this.http.delete(route, httpOptions);
         break;
       default:
         route +=
-          '?' +
+          "?" +
           Object.keys(datas)
             .map((key) => {
-              return key + '=' + datas[key];
+              return key + "=" + datas[key];
             })
-            .join('&');
+            .join("&");
         req = this.http.get(route, httpOptions);
         break;
     }
@@ -99,7 +99,7 @@ export class HttpService {
   }
   saveTokens(response: { token: string; user: User }) {
     localStorage.setItem(
-      'apiToken',
+      "apiToken",
       JSON.stringify({
         token: response.token,
         expires_at: DateTime.now()
@@ -110,7 +110,7 @@ export class HttpService {
     this.token = response.token;
   }
   async getUser() {
-    await this.requestApi('/api/user', 'GET').then(
+    await this.requestApi("/api/user", "GET").then(
       (res) => {
         this.user = res;
       },
@@ -125,11 +125,11 @@ export class HttpService {
     return this.token !== undefined;
   }
   logout() {
-    localStorage.removeItem('apiToken');
-    localStorage.removeItem('spotifyToken');
+    localStorage.removeItem("apiToken");
+    localStorage.removeItem("spotifyToken");
     this.token = undefined;
     this.spotifyToken = undefined;
     this.user = undefined;
-    this.router.navigate(['/login']);
+    this.router.navigate(["/login"]);
   }
 }

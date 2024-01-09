@@ -1,5 +1,5 @@
-import { DateTime } from 'luxon';
-import { User } from './user.model';
+import { DateTime } from "luxon";
+import { User } from "./user.model";
 
 export interface Group {
   id: number;

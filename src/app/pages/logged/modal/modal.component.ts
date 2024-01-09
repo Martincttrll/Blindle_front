@@ -1,11 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { Router } from '@angular/router';
-import { GroupService } from 'src/app/shared/services/group.service';
+import { Component, EventEmitter, Output } from "@angular/core";
+import { Router } from "@angular/router";
+import { GroupService } from "src/app/shared/services/group.service";
 
 @Component({
-  selector: 'app-modal',
-  templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss'],
+  selector: "app-modal",
+  templateUrl: "./modal.component.html",
+  styleUrls: ["./modal.component.scss"],
 })
 export class ModalComponent {
   @Output() closeModalEvent = new EventEmitter<void>();
@@ -26,22 +26,20 @@ export class ModalComponent {
     this.groupService
       .joinGroup(grouptoken)
       .then((data) => {
-        console.log(data);
-        console.log('Vous avez rejoin le groupe : ' + data.name);
-        this.router.navigate(['/group', data.token]);
+        console.log("Vous avez rejoin le groupe : " + data.name);
+        this.router.navigate(["/group", data.token]);
         this.sendCloseModal();
       })
       .catch((error) => {
         console.error(error);
-        this.errorJoinGroup = 'Code invalide.';
+        this.errorJoinGroup = "Code invalide.";
       });
   }
 
   createGroup(inputElement: any) {
     const groupname = inputElement.value;
     this.groupService.createGroup(groupname).then((data) => {
-      console.log(data);
-      this.router.navigate(['/group', data.token]);
+      this.router.navigate(["/group", data.token]);
       this.sendCloseModal();
     });
   }
