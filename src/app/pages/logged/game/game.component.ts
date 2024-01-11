@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { Group } from "src/app/shared/models/group.model";
 import { Song } from "src/app/shared/models/song.model";
 import { User } from "src/app/shared/models/user.model";
@@ -21,6 +21,7 @@ export class GameComponent {
     message: string;
     status: string | undefined;
   }[] = [];
+
   groupToken: string = "";
   currentSong?: any;
   showCurrentSong: boolean = false;
@@ -29,11 +30,14 @@ export class GameComponent {
 
   nbManche: number = 5;
   currentManche: number = 0;
+  hasGameEnded: boolean = false;
+  winner?: User;
   constructor(
     private ws: WebsocketService,
     private http: HttpService,
     private route: ActivatedRoute,
-    private groupService: GroupService
+    private groupService: GroupService,
+    private router: Router
   ) {}
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -167,17 +171,17 @@ export class GameComponent {
               this.currentSong.title = undefined;
               this.currentSong.artist = undefined;
               this.getRandomTrack();
+              this.currentManche++;
             }, 4000);
           });
         }
       }
-      this.currentManche++;
     } else {
       console.log("Jeu fini, le nombre maximal de manche a été atteint");
+      this.handleEndOfGame();
     }
   }
 
-  /////Affichage composant
   sortedUsers(): User[] {
     return (
       this.group?.users
@@ -197,5 +201,30 @@ export class GameComponent {
       default:
         return "";
     }
+  }
+
+  handleEndOfGame() {
+    this.hasGameEnded = true;
+
+    const sortedUsers = this.sortedUsers();
+
+    if (sortedUsers.length > 0 && sortedUsers[0].points !== undefined) {
+      this.winner = sortedUsers[0];
+
+      this.http
+        .requestApi("/api/game/set-winner/", "POST", {
+          winner_id: this.winner.id,
+          group_id: this.group?.id,
+        })
+        .then((data) => {
+          console.log(data);
+        });
+    } else {
+      console.log("Aucun utilisateur avec des points trouvé");
+    }
+  }
+
+  redirectToHome() {
+    this.router.navigate([""]);
   }
 }

@@ -20,7 +20,26 @@
       type="audio/mp3" />
     Votre navigateur ne supporte pas l'élément audio.
   </audio>
-
+  <!-- EndedGame window -->
+  <div *ngIf="hasGameEnded">
+    <div class="fixed inset-0 z-10 flex items-center justify-center">
+      <div class="modal-overlay absolute inset-0 bg-black opacity-50"></div>
+      <div
+        class="modal-container flex flex-col items-center justify-center p-6 gap-6 bg-secondary-content text-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+        <img src="/assets/img/achievement.png" alt="Succès" width="40px" />
+        <div>
+          <span class="font-bold">{{ winner?.name }}</span> a remporté la partie
+          !
+        </div>
+        <button
+          class="btn bg-primary text-white w-60"
+          (click)="redirectToHome()">
+          Quitter
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- End EndedGame window -->
   <div>
     <div *ngFor="let message of chatMessages">
       <div *ngIf="message.status; else elseBlock" class="text-secondary">
