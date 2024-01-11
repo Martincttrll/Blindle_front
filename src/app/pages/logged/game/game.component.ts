@@ -40,6 +40,8 @@ export class GameComponent {
     private router: Router
   ) {}
   ngOnInit(): void {
+    this.nbManche = this.ws.nbManche;
+    console.log(this.nbManche);
     this.route.paramMap.subscribe((params) => {
       this.groupToken = params.get("token") ?? "";
     });

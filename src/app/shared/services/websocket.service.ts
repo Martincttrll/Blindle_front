@@ -24,6 +24,7 @@ window.Pusher = require("pusher-js");
 export class WebsocketService {
   private ws: any;
   private channel: any;
+  public nbManche: number = 5;
 
   private guessAnswerSubject = new Subject<any>();
   public guessAnswer$ = this.guessAnswerSubject.asObservable();
@@ -85,6 +86,7 @@ export class WebsocketService {
     });
     channel.bind("startGame", (data: any) => {
       this.router.navigate(["/game/" + data.groupToken]);
+      this.nbManche = data.nbManche;
     });
   }
 }

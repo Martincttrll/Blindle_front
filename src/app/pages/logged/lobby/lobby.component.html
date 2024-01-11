@@ -5,6 +5,20 @@
   <button class="btn-sm btn-neutral" (click)="copyToken(grouptoken)">
     Clique pour copier !
   </button>
+
+  <div class="mt-5">
+    <div>Nombre de manches :</div>
+    <div class="flex items-center mt-2">
+      <button (click)="decrementManche()" class="bg-zinc-700 px-3">-</button>
+      <input
+        class="input input-bordered input-xs"
+        type="number"
+        name="nbManche"
+        id="nbManche"
+        [value]="nbManche" />
+      <button (click)="incrementManche()" class="bg-zinc-700 px-3">+</button>
+    </div>
+  </div>
 </div>
 
 <div *ngIf="group">
@@ -30,4 +44,8 @@
     </tbody>
   </table>
 </div>
-<button class="btn bg-primary text-white" (click)="setReady()">Jouer !</button>
+<div class="flex justify-center mt-5">
+  <button class="btn bg-primary text-white" (click)="setReady()">
+    Jouer !
+  </button>
+</div>

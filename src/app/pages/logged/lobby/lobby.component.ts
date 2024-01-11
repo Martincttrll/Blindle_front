@@ -15,6 +15,7 @@ export class LobbyComponent {
   groupToken: string = "";
   group?: Group;
   readyPlayers: Array<number> = [];
+  nbManche: number = 5;
 
   constructor(
     private route: ActivatedRoute,
@@ -53,7 +54,10 @@ export class LobbyComponent {
 
   setReady(): void {
     this.http
-      .requestApi("/api/game/start/" + this.groupToken, "GET")
+      .requestApi("/api/game/start", "POST", {
+        token: this.groupToken,
+        nbManche: this.nbManche,
+      })
       .then((data) => {});
     /////Tous les joueurs soient prêt pour que la partie se lance.
     //   const id = this.http.user!.id;
@@ -77,5 +81,15 @@ export class LobbyComponent {
     //       );
     //     }
     // });
+  }
+
+  decrementManche() {
+    if (this.nbManche > 1) {
+      this.nbManche--;
+    }
+  }
+
+  incrementManche() {
+    this.nbManche++;
   }
 }
