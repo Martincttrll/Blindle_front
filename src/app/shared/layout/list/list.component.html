@@ -1,14 +1,17 @@
-<div *ngIf="datas" class="flex flex-col w-full">
-  <app-list-item
-    *ngFor="let data of datas; let i = index"
-    [leftData]="data.leftData"
-    [centerData]="data.centerData"
-    [rightData]="data.rightData"
-    [index]="i + 1"
-    [isLeftDataPic]="data.isLeftDataPic"
-    [isRightDataDate]="data.isRightDataDate"
-    [isRightDataLink]="data.isRightDataLink"
-  ></app-list-item>
+<div *ngIf="datas" class="overflow-x-auto">
+  <table class="table table-zebra">
+    <tbody>
+      <app-list-item
+        *ngFor="let data of datas; let i = index"
+        [leftData]="data.leftData"
+        [centerData]="data.centerData"
+        [rightData]="data.rightData"
+        [index]="i + 1"
+        [isLeftDataPic]="data.isLeftDataPic"
+        [isRightDataDate]="data.isRightDataDate"
+        [isRightDataLink]="data.isRightDataLink"></app-list-item>
+    </tbody>
+  </table>
 </div>
 <div *ngIf="!datas" class="text-zinc-600 italic">
   Vous n'avez pas encore joué de partie
