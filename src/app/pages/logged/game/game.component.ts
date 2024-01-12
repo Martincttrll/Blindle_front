@@ -152,6 +152,7 @@ export class GameComponent {
   }
 
   playAudio() {
+    console.log("Current manche : " + this.currentManche);
     if (this.currentManche < this.nbManche) {
       if (this.isUrlReady) {
         const audioPlayer = this.audioPlayer.nativeElement as HTMLAudioElement;
@@ -165,7 +166,6 @@ export class GameComponent {
               .then((data) => {
                 this.currentSong.title = data.title;
                 this.currentSong.artist = data.artist;
-                console.log(data);
                 this.showCurrentSong = true;
               });
             setTimeout(() => {
@@ -221,6 +221,7 @@ export class GameComponent {
         .then((data) => {
           console.log(data);
         });
+      this.handleAchievementsLinking(this.winner.id);
     } else {
       console.log("Aucun utilisateur avec des points trouvé");
     }
@@ -228,5 +229,61 @@ export class GameComponent {
 
   redirectToHome() {
     this.router.navigate([""]);
+  }
+  attachAchievement(id_achievement: number) {
+    this.http
+      .requestApi("/api/achievement/attach/" + id_achievement, "POST")
+      .then((data) => {
+        console.log(data.message);
+      });
+  }
+  hasPlayerWith300PointsAdvantage(): boolean {
+    const sortedUsers = this.sortedUsers();
+
+    if (sortedUsers.length >= 2) {
+      const topPlayer = sortedUsers[0];
+      const secondPlayer = sortedUsers[1];
+      return (topPlayer.points || 0) >= (secondPlayer.points || 0) + 300;
+    }
+    return false;
+  }
+  async handleAchievementsLinking(winner_id: number) {
+    try {
+      if (winner_id === this.http.user?.id) {
+        const userAchievement = await this.http.requestApi(
+          "/api/achievement/",
+          "GET"
+        );
+        //First win
+        const hasFirstWin = userAchievement?.achievements?.some(
+          (achievement: any) => achievement.id === 1
+        );
+
+        if (!hasFirstWin) {
+          this.http
+            .requestApi("/api/achievement/attach/1", "POST")
+            .then((data) => {
+              console.log(data);
+            });
+        }
+        //Win with more than 300pts than ur opponent
+        const hasDominateur = userAchievement?.achievements?.some(
+          (achievement: any) => achievement.id === 2
+        );
+
+        if (!hasDominateur && this.hasPlayerWith300PointsAdvantage()) {
+          this.http
+            .requestApi("/api/achievement/attach/2", "POST")
+            .then((data) => {
+              console.log(data);
+            });
+        }
+      }
+    } catch (error) {
+      console.error(
+        "Erreur lors de la récupération des réalisations de l'utilisateur :",
+        error
+      );
+    }
   }
 }

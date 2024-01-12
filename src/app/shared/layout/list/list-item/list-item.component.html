@@ -1,11 +1,19 @@
-<div
+<!-- <div
   [ngClass]="{ 'bg-zinc-800': isEven(), 'bg-zinc-700': !isEven() }"
-  class="flex justify-between items-center p-4 gap-2"
->
+  class="flex justify-between items-center p-4 gap-2">
   <img *ngIf="isLeftDataPic" [src]="leftData" alt="image" />
   <span *ngIf="!isLeftDataPic">{{ leftData }}</span>
   <span>{{ centerData }}</span>
   <span *ngIf="isRightDataDate">{{ rightData | date : "dd-MM-yyyy" }}</span>
   <span *ngIf="!isRightDataDate && !isRightDataLink">{{ rightData }}</span>
   <a *ngIf="isRightDataLink" [href]="rightData">Lire</a>
-</div>
+</div> -->
+
+<tr class="flex justify-between">
+  <td *ngIf="isLeftDataPic"><img [src]="leftData" alt="image" /></td>
+  <td *ngIf="!isLeftDataPic">{{ leftData }}</td>
+  <td>{{ centerData }}</td>
+  <td *ngIf="isRightDataDate">{{ rightData | date : "dd-MM-yyyy" }}</td>
+  <td *ngIf="!isRightDataDate && !isRightDataLink">{{ rightData }}</td>
+  <td *ngIf="isRightDataLink"><a [href]="rightData">Lire</a></td>
+</tr>

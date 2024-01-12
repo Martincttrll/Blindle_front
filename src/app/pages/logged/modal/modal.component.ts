@@ -1,6 +1,7 @@
 import { Component, EventEmitter, Output } from "@angular/core";
 import { Router } from "@angular/router";
 import { GroupService } from "src/app/shared/services/group.service";
+import { HttpService } from "src/app/shared/services/http.service";
 
 @Component({
   selector: "app-modal",
@@ -12,7 +13,11 @@ export class ModalComponent {
 
   showCreateGroup: boolean = false;
   errorJoinGroup?: string;
-  constructor(public groupService: GroupService, private router: Router) {}
+  constructor(
+    public groupService: GroupService,
+    private router: Router,
+    private http: HttpService
+  ) {}
 
   sendCloseModal() {
     this.closeModalEvent.emit();
@@ -42,5 +47,23 @@ export class ModalComponent {
       this.router.navigate(["/group", data.token]);
       this.sendCloseModal();
     });
+    this.createGroupAchievement();
+  }
+
+  async createGroupAchievement() {
+    const userAchievement = await this.http.requestApi(
+      "/api/achievement/",
+      "GET"
+    );
+    //First win
+    const hasCreator = userAchievement?.achievements?.some(
+      (achievement: any) => achievement.id === 1
+    );
+
+    if (!hasCreator) {
+      this.http.requestApi("/api/achievement/attach/3", "POST").then((data) => {
+        console.log(data);
+      });
+    }
   }
 }
