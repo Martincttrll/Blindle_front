@@ -1,6 +1,6 @@
 # BlindleFront
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.9.
+This project is a Single Page Application (SPA) built with Angular for an online Blindtest game. It uses WebSocket for real-time interactions and leverages the Spotify API to randomly select songs from players' accounts.
 
 ## Development server
 
